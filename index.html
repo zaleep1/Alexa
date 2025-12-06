@@ -230,7 +230,7 @@
     "En serio? 😭",
     "Acepta 😠"
   ];
-  const noImages = ["3.png","4.png","3.png","4.png","3.png","4.png"];
+  const noImages = ["3.png","4.png","3.png","5.png","3.png","5.png"];
 
   const welcomeImage = "1.png";
   const sorryImage = "2.png";
@@ -281,7 +281,7 @@
     titleEl.textContent = "Perdóname por haber tardado en decirtelo...";
     mainImage.src = sorryImage;
     questionEl.innerHTML = '<span class="timed"> </span>';
-    noteEl.textContent = '(espera 5 segundos)';
+    noteEl.textContent = '(5s)';
     clearButtons();
 
     setTimeout(() => { showProposal(); }, timedScreenDurationMs);
