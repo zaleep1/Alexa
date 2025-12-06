@@ -291,7 +291,7 @@
     stage = 2;
     insistCount = 0;
     currentNoIndex = 0;
-    titleEl.textContent = "Pero... ya no aguanto más";
+    titleEl.textContent = "Pero no aguanto más";
     mainImage.src = welcomeImage;
     questionEl.textContent = 'Quieres ser mi novia miamorcito?';
     noteEl.textContent = '';
@@ -323,7 +323,7 @@
     if (insistCount >= maxInsist) {
       const noBtn = document.getElementById('noBtn');
       noBtn.setAttribute('disabled','true');
-      noteEl.textContent = "Ya intenté muchas formas... ❤️";
+      noteEl.textContent = "💔";
       return;
     }
 
@@ -348,9 +348,9 @@
 
   function handleYes() {
     stage = 99;
-    titleEl.textContent = "¡Gracias! 😭💖";
+    titleEl.textContent = "😭💖";
     mainImage.src = finalImage;
-    questionEl.textContent = "Gracias, te haré muy feliz 💍";
+    questionEl.textContent = "Dime que si al wasap que no me deja usar json aqui JASJASJ 😔 (pa guardar la respuesta)";
     noteEl.textContent = '';
     clearButtons();
   }
