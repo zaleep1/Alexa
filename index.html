@@ -228,7 +228,7 @@ button{
 
       <div class="final" id="final">
 <p>
-<b>Amor</b>,<br><br>
+<b>Gracias por aceptar mi amorcito bello 🥺</b>,<br><br>
 sé que verás esto cuando te despiertes y quiero desearte un día hermoso,
 quiero que empieces la mañana recordando que
 eres lo mejor que me ha pasado en esta vida.<br><br>
@@ -309,9 +309,12 @@ seal.onclick=()=>{
   click();
   envelope.classList.add("open");
   paper.classList.add("show-question");
-  wrapper.classList.add("lower");
   seal.style.display="none";
   music.play();
+
+  setTimeout(()=>{
+    wrapper.classList.add("lower");
+  }, 700); // ajusta: 600–900 queda perfecto
 };
 
 noBtn.onclick=()=>{
