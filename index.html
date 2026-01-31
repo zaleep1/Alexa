@@ -2,174 +2,227 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>¿Quieres ser mi San Valentín?</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💌</title>
 
 <style>
-*{box-sizing:border-box;font-family:'Georgia',serif}
+:root{
+  --rose:#d63384;
+  --paper:#fffdf7;
+}
 
-body{
+html,body{
   margin:0;
-  height:100vh;
+  height:100%;
+  font-family:Arial,sans-serif;
+  background:url('x.png') center/cover fixed no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   overflow:hidden;
-  background:url('x.png') center/cover no-repeat;
 }
 
-/* ===== BURBUJAS ===== */
-.bubble{
-  position:absolute;
-  bottom:-100px;
-  width:40px;
-  height:40px;
-  background:rgba(255,255,255,0.3);
-  border-radius:50%;
-  animation:float 12s infinite linear;
-}
-@keyframes float{
-  to{transform:translateY(-120vh)}
-}
-
-/* ===== CONTENEDOR ===== */
-.wrapper{
+/* 🌸 BURBUJAS */
+#bubbles{
   position:absolute;
   inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   pointer-events:none;
 }
-
-/* ===== CARTA ===== */
-.envelope{
+.bubble{
   position:absolute;
-  width:320px;
-  height:220px;
-  background:#f5e6d3;
-  border-radius:10px;
-  box-shadow:0 15px 40px rgba(0,0,0,.3);
-  bottom:50%;
-  transform:translateY(50%);
-  transition:1.5s ease;
-  pointer-events:auto;
+  font-size:20px;
+  background:rgba(255,255,255,.7);
+  padding:8px 16px;
+  border-radius:30px;
+  animation:float 8s forwards;
+}
+@keyframes float{
+  0%{opacity:0;transform:scale(.6)}
+  50%{opacity:1;transform:scale(1.2) translateY(-50px)}
+  100%{opacity:0;transform:translateY(-120px)}
 }
 
-/* baja cuando se abre */
+/* 💌 CONTENEDOR */
+.wrapper{
+  position:relative;
+  width:380px;
+  height:90vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:1.5s ease;
+}
+
+/* cuando el papel sale, la carta baja */
+.wrapper.lower{
+  transform:translateY(120px);
+}
+
+/* 📜 PAPEL */
+.paper{
+  position:absolute;
+  bottom:160px;
+  width:92%;
+  max-height:0;
+  overflow:hidden;
+  background:var(--paper);
+  border-radius:18px;
+  box-shadow:0 15px 30px rgba(0,0,0,.25);
+  transition:1.4s ease;
+  z-index:3;
+}
+
+.paper.show-question{
+  max-height:200px;
+}
+
+.paper.show-full{
+  max-height:75vh;
+}
+
+.paper-inner{
+  padding:32px 26px;
+  text-align:center;
+  position:relative;
+}
+
+.question{
+  font-size:22px;
+  font-weight:800;
+  color:#333;
+  margin-bottom:18px;
+}
+
+/* 🌷 TULIPANES EN EL PAPEL */
+.tulip{
+  position:absolute;
+  width:48px;
+  opacity:.9;
+}
+.tl{top:10px; left:10px}
+.tr{top:10px; right:10px; transform:scaleX(-1)}
+.bl{bottom:10px; left:10px}
+.br{bottom:10px; right:10px; transform:scaleX(-1)}
+
+/* BOTONES */
+.buttons{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
+
+button{
+  border:none;
+  border-radius:999px;
+  padding:10px 24px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.btn-yes{
+  background:linear-gradient(90deg,#ff6fa8,#ff2e6b);
+  color:white;
+}
+.btn-no{
+  background:white;
+  border:2px solid #ffc6dd;
+  color:var(--rose);
+}
+
+/* 💖 TEXTO FINAL */
+.final{
+  display:none;
+  margin-top:20px;
+  font-size:15px;
+}
+
+/* ✉️ SOBRE */
+.envelope{
+  width:100%;
+  height:160px;
+  background:#ffe3ef;
+  border-radius:16px;
+  position:absolute;
+  bottom:50%;
+  transform:translateY(50%)
+  transition:1.5s ease
+  box-shadow:0 15px 30px rgba(0,0,0,.3);
+  z-index:2;
+}
+
+.flap{
+  position:absolute;
+  inset:0;
+  background:#ffd1e6;
+  clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);
+  transform-origin:top;
+  transition:1s;
+  z-index:4;
+}
+
+.envelope.open .flap{
+  transform:rotateX(180deg);
+}
+  
 .wrapper.lower .envelope{
   bottom:0;
   transform:translateY(0);
 }
 
-/* ===== SELLO ===== */
+
+/* 💖 SELLO */
 .seal{
-  width:60px;
-  height:60px;
-  background:#d63384;
-  border-radius:50%;
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#ff6fa8,#ff2e6b);
   color:white;
-  font-weight:bold;
+  font-size:28px;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  user-select:none;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+  z-index:5;
 }
-
-/* ===== PAPEL ===== */
-.paper{
-  position:absolute;
-  width:300px;
-  height:160px;
-  background:#fffaf3;
-  top:-20px;
-  left:10px;
-  border-radius:10px;
-  padding:20px;
-  box-shadow:0 10px 20px rgba(0,0,0,.2);
-  transform:translateY(0);
-  transition:1.5s ease;
-  overflow:hidden;
-  text-align:center;
-}
-
-/* sale el papel */
-.wrapper.open .paper{
-  transform:translateY(-220px);
-}
-
-/* se extiende */
-.wrapper.full .paper{
-  height:480px;
-  transform:translateY(-420px);
-  overflow-y:auto;
-}
-
-/* ===== TULIPANES ===== */
-.tulip{
-  position:absolute;
-  width:40px;
-}
-.t1{top:10px;left:10px}
-.t2{top:10px;right:10px}
-.t3{bottom:10px;left:10px}
-.t4{bottom:10px;right:10px}
-
-/* ===== BOTONES ===== */
-.buttons{
-  margin-top:15px;
-}
-button{
-  padding:8px 18px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  font-weight:bold;
-  margin:5px;
-}
-#yes{background:#28a745;color:white}
-#no{background:#dc3545;color:white;transition:.3s}
-
-/* ===== TEXTO ===== */
-h1{margin:0;font-size:22px;color:#d63384}
-p{font-size:15px;line-height:1.6;text-align:left}
 </style>
 </head>
 
 <body>
 
-<!-- burbujas -->
-<script>
-for(let i=0;i<25;i++){
-  let b=document.createElement('div')
-  b.className='bubble'
-  b.style.left=Math.random()*100+'%'
-  b.style.width=b.style.height=20+Math.random()*40+'px'
-  b.style.animationDuration=8+Math.random()*10+'s'
-  document.body.appendChild(b)
-}
-</script>
+<div id="bubbles"></div>
 
-<div class="wrapper" id="wrap">
-  <div class="envelope">
-    <div class="paper" id="paper">
+<audio id="music" src="music.mp3" loop></audio>
+<audio id="clickSound" src="boton.mp3"></audio>
 
-      <img src="tulipan.png" class="tulip t1">
-      <img src="tulipan.png" class="tulip t2">
-      <img src="tulipan.png" class="tulip t3">
-      <img src="tulipan.png" class="tulip t4">
+<div class="wrapper" id="wrapper">
 
-      <h1>¿Quieres ser mi San Valentín?</h1>
+  <!-- PAPEL -->
+  <div class="paper" id="paper">
+    <div class="paper-inner">
 
-      <div class="buttons">
-        <button id="yes">Sí</button>
-        <button id="no">No</button>
+      <!-- tulipanes -->
+      <img src="tulipan.png" class="tulip tl">
+      <img src="tulipan.png" class="tulip tr">
+      <img src="tulipan.png" class="tulip bl">
+      <img src="tulipan.png" class="tulip br">
+
+      <div class="question">
+        ¿Quieres ser mi San Valentín? 💘
       </div>
 
-      <div id="letter" style="display:none">
-        <p>
+      <div class="buttons" id="buttons">
+        <button class="btn-yes" id="yesBtn">Sí 💖</button>
+        <button class="btn-no" id="noBtn">No</button>
+      </div>
+
+      <div class="final" id="final">
+<p>
 <b>Amor</b>,<br><br>
 sé que verás esto cuando te despierte y quiero desearte un día hermoso.
 Quiero que empieces la mañana recordando algo muy importante:
@@ -203,43 +256,78 @@ Con amor, para ti 💖
       </div>
 
     </div>
-
-    <div class="seal" id="seal">Ola</div>
   </div>
+
+  <!-- SOBRE -->
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="seal" id="seal">❤️</div>
+  </div>
+
 </div>
 
-<audio id="music" src="music.mp3" loop></audio>
-<audio id="click" src="boton.mp3"></audio>
-
 <script>
-const wrap=document.getElementById('wrap')
-const seal=document.getElementById('seal')
-const yes=document.getElementById('yes')
-const no=document.getElementById('no')
-const paper=document.getElementById('paper')
-const letter=document.getElementById('letter')
-const music=document.getElementById('music')
-const click=document.getElementById('click')
+/* 🌸 BURBUJAS */
+const emojis=["❤️","💖","💕","💘","🌷"];
+setInterval(()=>{
+  const b=document.createElement("div");
+  b.className="bubble";
+  b.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+  b.style.left=Math.random()*80+"vw";
+  b.style.top=Math.random()*70+"vh";
+  document.getElementById("bubbles").appendChild(b);
+  setTimeout(()=>b.remove(),8000);
+},2500);
 
-let scale=1
+/* 🔊 SONIDOS */
+const music=document.getElementById("music");
+const clickSound=document.getElementById("clickSound");
+function click(){
+  clickSound.currentTime=0;
+  clickSound.play();
+}
+
+/* 💌 LÓGICA */
+let noCount=0;
+const maxNo=6;
+
+const seal=document.getElementById("seal");
+const envelope=document.getElementById("envelope");
+const paper=document.getElementById("paper");
+const wrapper=document.getElementById("wrapper");
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const buttons=document.getElementById("buttons");
+const final=document.getElementById("final");
 
 seal.onclick=()=>{
-  wrap.classList.add('open','lower')
-  music.play()
-}
+  click();
+  envelope.classList.add("open");
+  paper.classList.add("show-question");
+  wrapper.classList.add("lower");
+  seal.style.display="none";
+  music.play();
+};
 
-no.onclick=()=>{
-  click.play()
-  scale-=0.15
-  no.style.transform=`scale(${scale})`
-}
+noBtn.onclick=()=>{
+  click();
+  noCount++;
+  noBtn.style.transform=`scale(${1-noCount*0.15})`;
+  yesBtn.style.transform=`scale(${1+noCount*0.15})`;
+  if(noCount>=maxNo){
+    noBtn.disabled=true;
+    noBtn.style.opacity=.3;
+  }
+};
 
-yes.onclick=()=>{
-  click.play()
-  wrap.classList.add('full')
-  letter.style.display='block'
-}
+yesBtn.onclick=()=>{
+  click();
+  buttons.style.display="none";
+  final.style.display="block";
+  paper.classList.add("show-full");
+};
 </script>
 
 </body>
 </html>
+
