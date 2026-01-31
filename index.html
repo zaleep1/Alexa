@@ -308,12 +308,12 @@ const final=document.getElementById("final");
 seal.onclick=()=>{
   click();
   envelope.classList.add("open");
-  paper.classList.add("show-question");
+  wrapper.classList.add("lower");
   seal.style.display="none";
   music.play();
 
   setTimeout(()=>{
-    wrapper.classList.add("lower");
+    paper.classList.add("show-question");
   }, 700); // ajusta: 600–900 queda perfecto
 };
 
