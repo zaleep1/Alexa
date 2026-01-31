@@ -135,6 +135,17 @@ button{
   display:none;
   margin-top:20px;
   font-size:15px;
+  max-height:45vh;        /* altura visible del texto */
+  overflow-y:auto;        /* activa el scroll */
+  padding-right:6px;      /* espacio para la barra */
+  scrollbar-width:thin; 
+}
+.final::-webkit-scrollbar{
+  width:5px;
+}
+.final::-webkit-scrollbar-thumb{
+  background:#ffb3d9;
+  border-radius:10px;
 }
 
 /* ✉️ SOBRE */
