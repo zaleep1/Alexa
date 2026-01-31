@@ -1,388 +1,251 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>💕</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💘</title>
 
-  <style>
-    :root {
-      --rose: #d63384;
-      --bg-overlay: rgba(255,255,255,0.85);
-    }
-    html,body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: url('https://img.freepik.com/vector-gratis/tema-san-valentin-corazones-cielo-rosa_1308-38030.jpg?semt=ais_hybrid&w=740') no-repeat center center fixed;
-      background-size: cover;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-    }
+<style>
+:root{
+  --rose:#d63384;
+  --paper:#fff7fb;
+}
 
-    #bubbles-text {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
+html,body{
+  margin:0;
+  height:100%;
+  font-family:'Arial',sans-serif;
+  background:url('https://img.freepik.com/vector-gratis/tema-san-valentin-corazones-cielo-rosa_1308-38030.jpg') center/cover fixed;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
 
-    .text-bubble {
-      position: absolute;
-      font-size: 18px;
-      font-family: 'Cursive', sans-serif;
-      color: #d63384;
-      background-color: rgba(255, 255, 255, 0.7);
-      padding: 10px 20px;
-      border-radius: 25px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      animation: floatText 8s ease-in-out forwards;
-      white-space: nowrap;
-      opacity: 0;
-    }
+/* 💕 BURBUJAS */
+#bubbles-text{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.text-bubble{
+  position:absolute;
+  font-size:20px;
+  background:rgba(255,255,255,.7);
+  padding:10px 18px;
+  border-radius:30px;
+  animation:float 8s forwards;
+}
+@keyframes float{
+  0%{opacity:0;transform:scale(.6)}
+  50%{opacity:1;transform:scale(1.2) translateY(-50px)}
+  100%{opacity:0;transform:translateY(-120px)}
+}
 
-    @keyframes floatText {
-      0% { opacity: 0; transform: scale(0.5) translateY(0px); }
-      50% { opacity: 1; transform: scale(1.2) translateY(-50px); }
-      100% { opacity: 0; transform: scale(1) translateY(-120px); }
-    }
+/* 💌 CARTA */
+.card{
+  width:340px;
+  background:var(--paper);
+  border-radius:14px;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+  position:relative;
+  padding:40px 20px 20px;
+  text-align:center;
+  transition:1s;
+  z-index:10;
+}
 
+.title{
+  font-size:32px;
+  color:var(--rose);
+  font-weight:800;
+  animation:floatTitle 3s infinite;
+}
+@keyframes floatTitle{
+  50%{transform:translateY(-6px)}
+}
 
-    .card {
-      width: min(860px, 94vw);
-      background: var(--bg-overlay);
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
-      text-align: center;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      align-items: center;
-      z-index: 10;
-    }
+/* ✉️ SOBRE */
+.envelope{
+  width:100%;
+  height:180px;
+  background:#ffe3ef;
+  border-radius:10px;
+  position:relative;
+  overflow:hidden;
+  transition:1s;
+}
 
-    .title {
-      font-size: 34px;
-      color: var(--rose);
-      font-weight: 800;
-      margin: 0;
-      letter-spacing: .6px;
-      transform-origin: center;
-      animation: floatTitle 2.6s ease-in-out infinite;
-    }
+/* solapa */
+.flap{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#ffd1e6;
+  clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);
+  transform-origin:top;
+  transition:1s;
+}
 
-    @keyframes floatTitle {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+/* 💖 SELLO */
+.seal{
+  position:absolute;
+  top:60px;
+  left:50%;
+  transform:translateX(-50%);
+  width:70px;
+  height:70px;
+  background:linear-gradient(145deg,#ff6fa8,#ff2e6b);
+  border-radius:50%;
+  color:white;
+  font-size:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
 
-    .image-wrap {
-      width: 320px;
-      height: 220px;
-      border-radius: 14px;
-      overflow: hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(180deg, #fff 0%, #ffeef6 100%);
-      box-shadow: 0 10px 22px rgba(214,51,132,0.12);
-    }
+/* CONTENIDO */
+.content{
+  display:none;
+  padding-top:20px;
+}
 
-    .image-wrap img {
-      max-width: 100%;
-      max-height: 100%;
-      display:block;
-      object-fit: cover;
-      transition: transform .6s ease;
-    }
+.question{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:15px;
+}
 
-    .image-wrap img.pop {
-      transform: scale(1.05);
-    }
+.buttons{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
 
-    .question {
-      font-size: 22px;
-      color: #333;
-      font-weight: 700;
-      margin: 6px 0 0 0;
-      min-height: 60px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
+button{
+  border:none;
+  border-radius:999px;
+  padding:10px 20px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.3s;
+}
 
-    .buttons {
-      display:flex;
-      gap: 16px;
-      align-items:center;
-      justify-content:center;
-      margin-top: 6px;
-    }
+.btn-yes{
+  background:linear-gradient(90deg,#ff6fa8,#ff2e6b);
+  color:white;
+}
+.btn-no{
+  background:white;
+  border:2px solid #ffc6dd;
+  color:var(--rose);
+}
 
-    button {
-      cursor:pointer;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 22px;
-      font-weight: 800;
-      font-size: 16px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-      transition: transform .28s cubic-bezier(.2,.9,.3,1), opacity .25s;
-    }
-
-    .btn-ola {
-      background: linear-gradient(90deg, #ffd1e6, #ff8ab3);
-      color: #6b0230;
-      padding: 12px 28px;
-      font-size: 18px;
-    }
-
-    .btn-yes {
-      background: linear-gradient(90deg,#ff6fa8,#ff2e6b);
-      color: white;
-      min-width: 120px;
-    }
-
-    .btn-no {
-      background: #fff;
-      border: 2px solid #ffc6dd;
-      color: #d63384;
-      min-width: 100px;
-    }
-
-    .small-note {
-      font-size: 13px;
-      color: #8d6f79;
-    }
-
-    .btn-no[disabled] {
-      opacity: 0.45;
-      cursor: not-allowed;
-      transform: scale(.98);
-    }
-
-    .timed {
-      font-style: italic;
-      color: #9b3a61;
-      font-weight: 700;
-    }
-
-    @media (max-width:640px) {
-      .image-wrap { width: 260px; height: 180px; }
-      .title { font-size: 26px; }
-      .question { font-size: 18px; min-height: 56px; }
-    }
-
-    .floating-text {
-      position: absolute;
-      z-index: -1;
-      pointer-events:none;
-      color: rgba(214,51,132,0.08);
-      font-weight: 800;
-      font-size: 72px;
-      user-select:none;
-    }
-
-    .ft1 { top: 8%; left: 6%; transform: rotate(-14deg); }
-    .ft2 { bottom: 12%; right: 4%; transform: rotate(10deg); font-size: 90px; }
-  </style>
+/* 💖 CARTA ABIERTA */
+.card.open{
+  width:380px;
+}
+.card.open .envelope{
+  height:0;
+}
+.card.open .flap{
+  transform:rotateX(180deg);
+}
+.final{
+  display:none;
+}
+.final img{
+  width:100px;
+  border-radius:10px;
+  margin:6px;
+}
+</style>
 </head>
 
 <body>
 
-  <div id="bubbles-text"></div>
+<div id="bubbles-text"></div>
 
-  <div class="card" id="app">
+<div class="card" id="card">
+  <div class="title">Ola</div>
 
-    <h1 class="title" id="title">Ola Mari</h1>
-
-    <div class="image-wrap" id="imageWrap">
-      <img id="mainImage" src="1.png" alt="gatito" />
-    </div>
-
-    <div class="question" id="questionText">💌</div>
-
-    <div class="buttons" id="buttonsArea">
-      <button class="btn-ola" id="olaBtn">Ola</button>
-    </div>
-
-    <div class="small-note" id="note"></div>
-
-    <div class="floating-text ft1">wapa</div>
-    <div class="floating-text ft2">tqm</div>
+  <div class="envelope" id="envelope">
+    <div class="flap" id="flap"></div>
+    <div class="seal" id="seal">❤️</div>
   </div>
 
-<script>
-(() => {
+  <div class="content" id="content">
+    <div class="question" id="question">¿Quieres ser mi San Valentín? 💘</div>
+    <div class="buttons">
+      <button class="btn-yes" id="yesBtn">Sí 💖</button>
+      <button class="btn-no" id="noBtn">No</button>
+    </div>
+  </div>
 
-  const noTexts = [
-    "Como que no 😭",
-    "Estas segura de que no?",
-    "Segurisima??? 😔",
-    "De vdd?",
-    "En serio? 😭",
-    "Acepta 😠"
-  ];
-  const noImages = ["3.png","4.png","3.png","5.png","3.png","5.png"];
-
-  const welcomeImage = "1.png";
-  const sorryImage = "2.png";
-  const finalImage = "x.png";
-
-  const timedScreenDurationMs = 5000;
-  const maxInsist = noTexts.length;
-
-  const titleEl = document.getElementById('title');
-  const mainImage = document.getElementById('mainImage');
-  const questionEl = document.getElementById('questionText');
-  const buttonsArea = document.getElementById('buttonsArea');
-  const noteEl = document.getElementById('note');
-
-  let stage = 0;
-  let insistCount = 0;
-  let currentNoIndex = 0;
-
-  const toPreload = [welcomeImage, sorryImage, finalImage, ...noImages];
-  toPreload.forEach(src => { const img = new Image(); img.src = src; });
-
-  function clearButtons() { buttonsArea.innerHTML = ''; }
-
-  function createButton(className, text, id) {
-    const b = document.createElement('button');
-    b.className = className;
-    b.id = id || '';
-    b.textContent = text;
-    return b;
-  }
-
-  function showInitial() {
-    stage = 0;
-    titleEl.textContent = "¿Por que sigues viendo esto?";
-    mainImage.src = welcomeImage;
-    mainImage.classList.add('pop');
-    setTimeout(()=> mainImage.classList.remove('pop'), 700);
-    questionEl.textContent = '???';
-    noteEl.textContent = '';
-    clearButtons();
-    const olaBtn = createButton('btn-ola', 'Ola', 'olaBtn');
-    olaBtn.addEventListener('click', () => { showTimedApology(); });
-    buttonsArea.appendChild(olaBtn);
-  }
-
-  function showTimedApology() {
-    stage = 1;
-    titleEl.textContent = "Perdóname por haber tardado en decirtelo...";
-    mainImage.src = sorryImage;
-    questionEl.innerHTML = '<span class="timed"> </span>';
-    noteEl.textContent = '(5s)';
-    clearButtons();
-
-    setTimeout(() => { showProposal(); }, timedScreenDurationMs);
-  }
-
-  function showProposal() {
-    stage = 2;
-    insistCount = 0;
-    currentNoIndex = 0;
-    titleEl.textContent = "Pero no aguanto más";
-    mainImage.src = welcomeImage;
-    questionEl.textContent = 'Quieres ser mi novia miamorcito?';
-    noteEl.textContent = '';
-    renderProposalButtons();
-  }
-
-  function renderProposalButtons() {
-    clearButtons();
-    const yesBtn = createButton('btn-yes','Sí ❤️','yesBtn');
-    const noBtn  = createButton('btn-no','No','noBtn');
-
-    applyButtonScales(yesBtn, noBtn, insistCount);
-
-    yesBtn.addEventListener('click', handleYes);
-    noBtn.addEventListener('click', handleNo);
-
-    buttonsArea.appendChild(yesBtn);
-    buttonsArea.appendChild(noBtn);
-  }
-
-  function applyButtonScales(yesBtn, noBtn, insist) {
-    const yesScale = Math.min(2, 1 + insist * 0.15);
-    const noScale = Math.max(0.5, 1 - insist * 0.12);
-    yesBtn.style.transform = `scale(${yesScale})`;
-    noBtn.style.transform = `scale(${noScale})`;
-  }
-
-  function handleNo() {
-    if (insistCount >= maxInsist) {
-      const noBtn = document.getElementById('noBtn');
-      noBtn.setAttribute('disabled','true');
-      noteEl.textContent = "💔";
-      return;
-    }
-
-    insistCount++;
-
-    const text = noTexts[currentNoIndex];
-    const img = noImages[currentNoIndex];
-
-    questionEl.textContent = text;
-    mainImage.src = img;
-    mainImage.classList.add('pop');
-    setTimeout(()=> mainImage.classList.remove('pop'), 600);
-
-    noteEl.textContent = `Intento ${insistCount} de ${maxInsist}`;
-
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
-    applyButtonScales(yesBtn,noBtn,insistCount);
-
-    currentNoIndex = Math.min(currentNoIndex + 1, noTexts.length - 1);
-  }
-
-  function handleYes() {
-    stage = 99;
-    titleEl.textContent = "😭💖";
-    mainImage.src = finalImage;
-    questionEl.textContent = "Dime que si al wasap que no me deja usar json aqui JASJASJ 😔 (pa guardar la respuesta)";
-    noteEl.textContent = '';
-    clearButtons();
-  }
-
-  showInitial();
-
-})();
-</script>
+  <div class="final" id="final">
+    <p>
+      Amor, esta cartita es solo una pequeña forma de decirte lo mucho
+      que significas para mí. Gracias por existir, por tu sonrisa
+      y por hacer mis días más bonitos 💕
+    </p>
+    <div>
+      <img src="https://picsum.photos/200?1">
+      <img src="https://picsum.photos/200?2">
+      <img src="https://picsum.photos/200?3">
+    </div>
+  </div>
+</div>
 
 <script>
-const bubbleMessages = [
-  "❤️",
-  "🌟",
-  "💕",
-  "💖",
-  "💫",
-  "💘"
-];
+/* 💕 BURBUJAS */
+const emojis=["❤️","💖","💕","💘","🌸"];
+setInterval(()=>{
+  const b=document.createElement("div");
+  b.className="text-bubble";
+  b.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+  b.style.left=Math.random()*80+"vw";
+  b.style.top=Math.random()*70+"vh";
+  document.getElementById("bubbles-text").appendChild(b);
+  setTimeout(()=>b.remove(),8000);
+},2500);
 
-function createBubble() {
-  const bubble = document.createElement("div");
-  bubble.className = "text-bubble";
-  bubble.innerText = bubbleMessages[Math.floor(Math.random()*bubbleMessages.length)];
+/* 💌 LÓGICA */
+let noCount=0;
+const maxNo=6;
 
-  bubble.style.left = (Math.random()*80 + 10) + "vw";
-  bubble.style.top = (Math.random()*70 + 15) + "vh";
+const seal=document.getElementById("seal");
+const flap=document.getElementById("flap");
+const content=document.getElementById("content");
+const card=document.getElementById("card");
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const final=document.getElementById("final");
 
-  document.getElementById("bubbles-text").appendChild(bubble);
+seal.onclick=()=>{
+  flap.style.transform="rotateX(120deg)";
+  content.style.display="block";
+  seal.style.display="none";
+};
 
-  setTimeout(() => bubble.remove(), 8000);
-}
+noBtn.onclick=()=>{
+  noCount++;
+  noBtn.style.transform=`scale(${1-noCount*0.15})`;
+  yesBtn.style.transform=`scale(${1+noCount*0.15})`;
+  if(noCount>=maxNo){
+    noBtn.disabled=true;
+    noBtn.style.opacity=.3;
+  }
+};
 
-setInterval(createBubble, 2500);
+yesBtn.onclick=()=>{
+  card.classList.add("open");
+  content.style.display="none";
+  final.style.display="block";
+};
 </script>
 
 </body>
