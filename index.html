@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💘</title>
+<title>💌</title>
 
 <style>
 :root{
@@ -14,8 +14,8 @@
 html,body{
   margin:0;
   height:100%;
-  font-family:'Arial',sans-serif;
-  background:url('https://img.freepik.com/vector-gratis/tema-san-valentin-corazones-cielo-rosa_1308-38030.jpg') center/cover fixed;
+  font-family:Arial,sans-serif;
+  background:url('x.png') center/cover fixed no-repeat;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -23,16 +23,16 @@ html,body{
 }
 
 /* 💕 BURBUJAS */
-#bubbles-text{
+#bubbles{
   position:absolute;
   inset:0;
   pointer-events:none;
 }
-.text-bubble{
+.bubble{
   position:absolute;
   font-size:20px;
   background:rgba(255,255,255,.7);
-  padding:10px 18px;
+  padding:8px 16px;
   border-radius:30px;
   animation:float 8s forwards;
 }
@@ -44,14 +44,9 @@ html,body{
 
 /* 💌 CARTA */
 .card{
-  width:340px;
-  background:var(--paper);
-  border-radius:14px;
-  box-shadow:0 20px 40px rgba(0,0,0,.2);
+  width:360px;
   position:relative;
-  padding:40px 20px 20px;
   text-align:center;
-  transition:1s;
   z-index:10;
 }
 
@@ -59,46 +54,41 @@ html,body{
   font-size:32px;
   color:var(--rose);
   font-weight:800;
-  animation:floatTitle 3s infinite;
-}
-@keyframes floatTitle{
-  50%{transform:translateY(-6px)}
+  margin-bottom:10px;
 }
 
-/* ✉️ SOBRE */
+/* SOBRE */
 .envelope{
   width:100%;
-  height:180px;
+  height:200px;
   background:#ffe3ef;
-  border-radius:10px;
+  border-radius:12px;
   position:relative;
   overflow:hidden;
-  transition:1s;
+  box-shadow:0 15px 30px rgba(0,0,0,.25);
 }
 
-/* solapa */
+/* SOLAPA */
 .flap{
   position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   background:#ffd1e6;
   clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);
   transform-origin:top;
   transition:1s;
+  z-index:3;
 }
 
-/* 💖 SELLO */
+/* SELLO */
 .seal{
   position:absolute;
-  top:60px;
+  top:65px;
   left:50%;
   transform:translateX(-50%);
   width:70px;
   height:70px;
-  background:linear-gradient(145deg,#ff6fa8,#ff2e6b);
   border-radius:50%;
+  background:linear-gradient(145deg,#ff6fa8,#ff2e6b);
   color:white;
   font-size:28px;
   display:flex;
@@ -106,12 +96,26 @@ html,body{
   justify-content:center;
   cursor:pointer;
   box-shadow:0 8px 20px rgba(0,0,0,.3);
+  z-index:4;
 }
 
-/* CONTENIDO */
-.content{
-  display:none;
-  padding-top:20px;
+/* 📜 PAPEL */
+.paper{
+  position:absolute;
+  bottom:-160px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  background:var(--paper);
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 10px 20px rgba(0,0,0,.2);
+  transition:1s;
+  z-index:2;
+}
+
+.paper.show{
+  bottom:20px;
 }
 
 .question{
@@ -129,7 +133,7 @@ html,body{
 button{
   border:none;
   border-radius:999px;
-  padding:10px 20px;
+  padding:10px 22px;
   font-weight:800;
   cursor:pointer;
   transition:.3s;
@@ -145,57 +149,51 @@ button{
   color:var(--rose);
 }
 
-/* 💖 CARTA ABIERTA */
-.card.open{
-  width:380px;
-}
-.card.open .envelope{
-  height:0;
-}
-.card.open .flap{
-  transform:rotateX(180deg);
-}
+/* 💖 CONTENIDO FINAL */
 .final{
   display:none;
 }
 .final img{
-  width:100px;
+  width:90px;
   border-radius:10px;
-  margin:6px;
+  margin:5px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="bubbles-text"></div>
+<div id="bubbles"></div>
 
-<div class="card" id="card">
+<audio id="music" src="music.mp3" loop></audio>
+<audio id="clickSound" src="boton.mp3"></audio>
+
+<div class="card">
   <div class="title">Ola</div>
 
-  <div class="envelope" id="envelope">
+  <div class="envelope">
     <div class="flap" id="flap"></div>
     <div class="seal" id="seal">❤️</div>
-  </div>
 
-  <div class="content" id="content">
-    <div class="question" id="question">¿Quieres ser mi San Valentín? 💘</div>
-    <div class="buttons">
-      <button class="btn-yes" id="yesBtn">Sí 💖</button>
-      <button class="btn-no" id="noBtn">No</button>
-    </div>
-  </div>
+    <div class="paper" id="paper">
+      <div class="question" id="text">
+        ¿Quieres ser mi San Valentín? 💘
+      </div>
 
-  <div class="final" id="final">
-    <p>
-      Amor, esta cartita es solo una pequeña forma de decirte lo mucho
-      que significas para mí. Gracias por existir, por tu sonrisa
-      y por hacer mis días más bonitos 💕
-    </p>
-    <div>
-      <img src="https://picsum.photos/200?1">
-      <img src="https://picsum.photos/200?2">
-      <img src="https://picsum.photos/200?3">
+      <div class="buttons" id="buttons">
+        <button class="btn-yes" id="yesBtn">Sí 💖</button>
+        <button class="btn-no" id="noBtn">No</button>
+      </div>
+
+      <div class="final" id="final">
+        <p>
+          Amor, esta carta es solo un pedacito de todo lo que siento por ti.
+          Gracias por existir, por hacerme sonreír y por ser tú 💕
+        </p>
+        <img src="https://picsum.photos/200?1">
+        <img src="https://picsum.photos/200?2">
+        <img src="https://picsum.photos/200?3">
+      </div>
     </div>
   </div>
 </div>
@@ -205,13 +203,21 @@ button{
 const emojis=["❤️","💖","💕","💘","🌸"];
 setInterval(()=>{
   const b=document.createElement("div");
-  b.className="text-bubble";
+  b.className="bubble";
   b.innerText=emojis[Math.floor(Math.random()*emojis.length)];
   b.style.left=Math.random()*80+"vw";
   b.style.top=Math.random()*70+"vh";
-  document.getElementById("bubbles-text").appendChild(b);
+  document.getElementById("bubbles").appendChild(b);
   setTimeout(()=>b.remove(),8000);
 },2500);
+
+/* 🎵 SONIDOS */
+const music=document.getElementById("music");
+const clickSound=document.getElementById("clickSound");
+function playClick(){
+  clickSound.currentTime=0;
+  clickSound.play();
+}
 
 /* 💌 LÓGICA */
 let noCount=0;
@@ -219,19 +225,22 @@ const maxNo=6;
 
 const seal=document.getElementById("seal");
 const flap=document.getElementById("flap");
-const content=document.getElementById("content");
-const card=document.getElementById("card");
+const paper=document.getElementById("paper");
 const noBtn=document.getElementById("noBtn");
 const yesBtn=document.getElementById("yesBtn");
 const final=document.getElementById("final");
+const buttons=document.getElementById("buttons");
 
 seal.onclick=()=>{
-  flap.style.transform="rotateX(120deg)";
-  content.style.display="block";
+  playClick();
+  flap.style.transform="rotateX(140deg)";
+  paper.classList.add("show");
   seal.style.display="none";
+  music.play();
 };
 
 noBtn.onclick=()=>{
+  playClick();
   noCount++;
   noBtn.style.transform=`scale(${1-noCount*0.15})`;
   yesBtn.style.transform=`scale(${1+noCount*0.15})`;
@@ -242,11 +251,12 @@ noBtn.onclick=()=>{
 };
 
 yesBtn.onclick=()=>{
-  card.classList.add("open");
-  content.style.display="none";
+  playClick();
+  buttons.style.display="none";
   final.style.display="block";
 };
 </script>
 
 </body>
 </html>
+
