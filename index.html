@@ -133,7 +133,7 @@ body{
 .pocket-front{
   position:absolute;
   left:0; right:0; bottom:0;
-  height:42%;
+  height:28%;
   background:linear-gradient(160deg,#ffcfe2,#f6a0c4);
   border-radius:0 0 14px 14px;
   box-shadow:inset 0 8px 14px rgba(150,20,60,.18);
@@ -216,7 +216,7 @@ body{
 
 .paper-inner{
   position:relative;
-  padding:30px 22px 24px;
+  padding:30px 22px 76px;
   text-align:center;
 }
 
@@ -528,7 +528,7 @@ const hint       = document.getElementById("hint");
 
 let step = -1;
 let noCount = 0;
-const maxNo = 6;
+const maxNo = 10;
 
 music.volume = 0.6;
 window.addEventListener("load", ()=>{
@@ -555,11 +555,13 @@ function addLine(text){
 
 function addPhoto(){
   const img = document.createElement("img");
-  img.src = "foto.png";
-  img.alt = "";
   img.className = "letter-photo";
   img.id = "letterPhoto";
+  img.alt = "";
+  img.onload = ()=> growPaper();
+  img.onerror = ()=> growPaper();
   msgList.appendChild(img);
+  img.src = "foto.png";
   growPaper();
 }
 
@@ -621,44 +623,41 @@ yesBtn.addEventListener("click", ()=>{
   enviarRespuesta("sí");
 });
 
-noBtn.addEventListener("click", (e)=>{
+noBtn.addEventListener("click", ()=>{
   playClick();
   noCount++;
 
   if(noCount === 1){
     unsure.textContent = "¿Estás shegura? 🥺";
-  } else {
+  } else if(noCount < maxNo){
     const phrases = ["¿Shegura, sehgura?","😿","😭","De vdd?","Yo se q si 🤗"];
     unsure.textContent = phrases[Math.min(noCount-2, phrases.length-1)];
+  } else {
+    unsure.textContent = "Vale, está bien 😔";
   }
 
-  const scale = Math.max(1 - noCount*0.13, 0.35);
-  yesBtn.style.transform = `scale(${Math.min(1 + noCount*0.08, 1.6)})`;
+  const scale = Math.max(1 - noCount*0.09, 0.32);
+  yesBtn.style.transform = `scale(${Math.min(1 + noCount*0.05, 1.8)})`;
 
   if(noCount >= 2){
     if(!noBtn.classList.contains("evasive")){
       const rect = buttons.getBoundingClientRect();
-      noBtn.classList.add("evasive");
+      const pad = 26;
+      buttons.style.minHeight = (rect.height + pad*2) + "px";
       buttons.style.position = "relative";
+      noBtn.classList.add("evasive");
       noBtn.style.left = (rect.width/2 - 30) + "px";
-      noBtn.style.top = "0px";
+      noBtn.style.top = pad + "px";
+      growPaper(56);
     }
-    const containerRect = paper.getBoundingClientRect();
-    const maxX = containerRect.width - 90;
-    const maxY = 40;
-    const randX = Math.random() * maxX;
-    const randY = (Math.random() - 0.5) * maxY;
-    noBtn.style.left = randX + "px";
-    noBtn.style.top = randY + "px";
+    const containerRect = buttons.getBoundingClientRect();
+    const maxX = Math.max(containerRect.width - 90, 0);
+    const maxY = Math.max(containerRect.height - 48, 0);
+    noBtn.style.left = (Math.random() * maxX) + "px";
+    noBtn.style.top = (Math.random() * maxY) + "px";
   }
 
   noBtn.style.transform = `scale(${scale})`;
-
-  if(noCount >= maxNo){
-    noBtn.style.opacity = "0.35";
-    noBtn.style.pointerEvents = "none";
-    unsure.textContent = "Creo que eso es un sí 😌💖";
-  }
 });
 </script>
 
