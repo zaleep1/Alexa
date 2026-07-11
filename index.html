@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💌 Para ti</title>
-
+<title>💌</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
@@ -73,7 +72,6 @@ body{
   100%{ transform:translateY(110vh) translateX(var(--drift,40px)) rotate(360deg); opacity:0; }
 }
 
-
 #bubbles{ position:fixed; inset:0; pointer-events:none; z-index:0; }
 .bubble{
   position:absolute;
@@ -96,7 +94,7 @@ body{
 .stage{
   position:relative;
   width:min(420px, 92vw);
-  height:min(640px, 88vh);
+  height:min(680px, 90vh);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -109,61 +107,62 @@ body{
   height:100%;
   transition:transform 1.3s ease;
 }
-.scene.lowered{ transform:translateY(90px); }
+.scene.lowered{ transform:translateY(70px); }
 
 .envelope{
   position:absolute;
   left:50%;
-  bottom:8%;
+  bottom:14%;
   transform:translateX(-50%);
   width:100%;
-  max-width:360px;
-  height:200px;
+  max-width:340px;
+  height:190px;
+  z-index:3;
+  perspective:1200px;
+}
+
+.envelope-back{
+  position:absolute;
+  inset:0;
   border-radius:14px;
   background:linear-gradient(160deg,#ffd9e9,#ffc0dc);
   box-shadow:0 20px 45px rgba(150,30,70,.35), inset 0 0 0 2px rgba(255,255,255,.5);
-  z-index:3;
+  z-index:1;
 }
-.envelope::before,
-.envelope::after{
-  content:"";
+
+.pocket-front{
   position:absolute;
-  bottom:0;
-  width:0; height:0;
-  border-style:solid;
-}
-.envelope::before{
-  left:0;
-  border-width:0 0 90px 180px;
-  border-color:transparent transparent rgba(255,255,255,.35) transparent;
-}
-.envelope::after{
-  right:0;
-  border-width:0 180px 90px 0;
-  border-color:transparent transparent rgba(255,255,255,.2) transparent;
+  left:0; right:0; bottom:0;
+  height:42%;
+  background:linear-gradient(160deg,#ffcfe2,#f6a0c4);
+  border-radius:0 0 14px 14px;
+  box-shadow:inset 0 8px 14px rgba(150,20,60,.18);
+  z-index:3;
 }
 
 .flap{
   position:absolute;
   inset:0;
   background:linear-gradient(160deg,#ffc6dd,#f9a9c8);
-  clip-path:polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+  clip-path:polygon(0 0, 100% 0, 50% 68%);
   transform-origin:top center;
-  transition:transform 1s ease;
-  z-index:5;
+  backface-visibility:hidden;
+  transition:transform 1.1s ease;
+  z-index:4;
   border-radius:14px 14px 0 0;
+  box-shadow:0 6px 10px rgba(150,20,60,.12);
 }
 .envelope.open .flap{
-  transform:rotateX(178deg);
+  transform:rotateX(180deg);
 }
 
 .seal{
   position:absolute;
-  top:34px;
+  top:26px;
   left:50%;
   transform:translateX(-50%);
-  width:64px;
-  height:64px;
+  width:62px;
+  height:62px;
   border-radius:50%;
   background:radial-gradient(circle at 35% 30%, #ff8fb3, var(--rose-deep) 70%);
   color:#fff;
@@ -173,7 +172,7 @@ body{
   justify-content:center;
   cursor:pointer;
   box-shadow:0 10px 22px rgba(150,20,60,.45), inset 0 0 0 2px rgba(255,255,255,.35);
-  z-index:7;
+  z-index:5;
   transition:opacity .5s ease, transform .5s ease;
   animation:pulse 2.2s ease-in-out infinite;
 }
@@ -199,25 +198,25 @@ body{
 .paper{
   position:absolute;
   left:50%;
-  bottom:26%;
-  transform:translateX(-50%);
-  width:92%;
-  max-width:340px;
+  bottom:10px;
+  transform:translateX(-50%) rotate(-3deg);
+  width:90%;
+  max-width:300px;
   max-height:0;
   overflow:hidden;
   background:var(--paper);
-  border-radius:16px;
-  box-shadow:0 25px 50px rgba(120,20,55,.3);
-  transition:max-height 1.3s ease, bottom 1.3s ease;
-  z-index:4;
+  border-radius:10px 10px 5px 5px;
+  box-shadow:0 22px 44px rgba(120,20,55,.35);
+  transition:max-height 1.1s ease, transform 1.1s ease;
+  z-index:2;
   border:1px solid var(--paper-line);
 }
-.paper.show{ max-height:220px; bottom:30%; }
-.paper.full{ max-height:70vh; bottom:14%; }
+.paper.show{ transform:translateX(-50%) rotate(0deg); }
+.paper.full{ max-height:70vh; }
 
 .paper-inner{
   position:relative;
-  padding:34px 24px 26px;
+  padding:30px 22px 24px;
   text-align:center;
 }
 
@@ -253,6 +252,22 @@ body{
   font-weight:700;
   color:var(--rose-deep);
 }
+
+.letter-photo{
+  display:block;
+  max-width:78%;
+  margin:4px auto 18px;
+  border-radius:10px;
+  border:6px solid #fff;
+  box-shadow:0 12px 26px rgba(120,20,55,.28);
+  opacity:0;
+  animation:revealPhoto .7s ease forwards;
+}
+@keyframes revealPhoto{
+  from{ opacity:0; transform:rotate(-2deg) translateY(14px) scale(.95); }
+  to{ opacity:1; transform:rotate(-2deg) translateY(0) scale(1); }
+}
+
 .tap-note{
   margin-top:14px;
   font-size:13px;
@@ -305,7 +320,6 @@ button{
   position:absolute;
 }
 
-
 .final{
   display:none;
   margin-top:6px;
@@ -329,7 +343,6 @@ button{
   text-align:center;
   margin-bottom:10px;
 }
-
 
 #confetti{
   position:fixed;
@@ -363,38 +376,41 @@ button{
 <div id="bubbles"></div>
 <div id="confetti"></div>
 
-<audio id="music" src="musica.mp3" loop preload="none"></audio>
+<audio id="music" src="musica.mp3" loop preload="auto"></audio>
 <audio id="clickSound" src="click.mp3" preload="none"></audio>
 
 <div class="stage">
   <div class="scene" id="scene">
 
-    <div class="paper" id="paper">
-      <div class="paper-inner">
-        <span class="corner tl">🌷</span>
-        <span class="corner tr">🌷</span>
-        <span class="corner bl">🌷</span>
-        <span class="corner br">🌷</span>
+    <div class="envelope" id="envelope">
+      <div class="envelope-back"></div>
 
-        <div class="msg-list" id="msgList">
-          <p class="msg-line" id="introLine" style="opacity:1; transform:none; animation:none;">Toca el sello para abrir la carta 💌</p>
-        </div>
-        <div class="tap-note" id="tapNote" style="display:none;">toca aquí para seguir leyendo →</div>
-        <div class="unsure" id="unsure"></div>
+      <div class="paper" id="paper">
+        <div class="paper-inner">
+          <span class="corner tl">🌷</span>
+          <span class="corner tr">🌷</span>
+          <span class="corner bl">🌷</span>
+          <span class="corner br">🌷</span>
 
-        <div class="buttons" id="buttons" style="display:none;">
-          <button class="btn-yes" id="yesBtn">Sí 💖</button>
-          <button class="btn-no" id="noBtn">No</button>
-        </div>
+          <div class="msg-list" id="msgList">
+            <p class="msg-line" id="introLine" style="opacity:1; transform:none; animation:none;">Toca el sello para abrir la carta 💌</p>
+          </div>
+          <div class="tap-note" id="tapNote" style="display:none;">toca aquí para seguir leyendo →</div>
+          <div class="unsure" id="unsure"></div>
 
-        <div class="final" id="final">
-          <div class="title-final">Gracias por decir que sí 💕</div>
-          <p id="finalText"></p>
+          <div class="buttons" id="buttons" style="display:none;">
+            <button class="btn-yes" id="yesBtn">Sí 💖</button>
+            <button class="btn-no" id="noBtn">No</button>
+          </div>
+
+          <div class="final" id="final">
+            <div class="title-final">Gracias por decir que sí 💕</div>
+            <p id="finalText"></p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="envelope" id="envelope">
+      <div class="pocket-front"></div>
       <div class="flap"></div>
       <div class="seal" id="seal">❤️</div>
     </div>
@@ -404,13 +420,11 @@ button{
 </div>
 
 <script>
-
 const STEPS = [
   "Sé que llevamos poco tiempo desde que nos conocimos...",
   "Y sé que es demasiado pronto, y probablemente ya lo has notado, pero estos días han sido mejores a tu lado, y por eso <span class=\"accent\">me gustas</span>, y me gustaría decilte",
   "¿Quieres ser mi <span class=\"accent\">novia</span>? 💘"
 ];
-
 
 const FINAL_MESSAGE = `
   Desde que te conozco, todo se siente distinto, en el buen sentido<br><br>
@@ -419,7 +433,7 @@ const FINAL_MESSAGE = `
   <b>Te quielo mucho. 💖</b>
 `;
 
-const FORM_ENDPOINT = "https://formspree.io/f/xpqvarep"; 
+const FORM_ENDPOINT = "https://formspree.io/f/xpqvarep";
 
 async function enviarRespuesta(respuesta){
   const data = {
@@ -443,14 +457,12 @@ async function enviarRespuesta(respuesta){
   }
 }
 
-
 function tryLoadBackground(){
   const img = new Image();
   img.onload = ()=> document.body.classList.add("has-bg");
   img.src = "fondo.jpg";
 }
 tryLoadBackground();
-
 
 const petalEmojis = ["🌸","🌷","💮","🌺"];
 setInterval(()=>{
@@ -514,17 +526,24 @@ const final      = document.getElementById("final");
 const finalText  = document.getElementById("finalText");
 const hint       = document.getElementById("hint");
 
-let step = -1;     
+let step = -1;
 let noCount = 0;
 const maxNo = 6;
 
+music.volume = 0.6;
+window.addEventListener("load", ()=>{
+  music.play().catch(()=>{});
+});
+document.addEventListener("pointerdown", function primerToque(){
+  music.play().catch(()=>{});
+  document.removeEventListener("pointerdown", primerToque);
+}, { once:true });
 
 function growPaper(extra = 26){
   requestAnimationFrame(()=>{
     paper.style.maxHeight = (paperInner.scrollHeight + extra) + "px";
   });
 }
-
 
 function addLine(text){
   const p = document.createElement("p");
@@ -534,13 +553,34 @@ function addLine(text){
   growPaper();
 }
 
+function addPhoto(){
+  const img = document.createElement("img");
+  img.src = "foto.png";
+  img.alt = "";
+  img.className = "letter-photo";
+  img.id = "letterPhoto";
+  msgList.appendChild(img);
+  growPaper();
+}
+
+function removePhoto(){
+  const img = document.getElementById("letterPhoto");
+  if(!img) return;
+  img.style.transition = "opacity .35s ease, transform .35s ease";
+  img.style.opacity = "0";
+  img.style.transform = "translateY(-10px) rotate(-2deg) scale(.95)";
+  setTimeout(()=>{
+    img.remove();
+    growPaper();
+  }, 360);
+}
 
 seal.addEventListener("click", ()=>{
   playClick();
   envelope.classList.add("open");
   scene.classList.add("lowered");
   seal.classList.add("hide");
-  try{ music.volume = 0.6; music.play(); }catch(e){}
+  music.play().catch(()=>{});
 
   setTimeout(()=>{
     paper.classList.add("show");
@@ -551,12 +591,13 @@ seal.addEventListener("click", ()=>{
   }, 1000);
 });
 
-
 msgList.addEventListener("click", ()=>{
   if(step < 0 || step >= STEPS.length - 1) return;
   playClick();
   step++;
+  if(step === 2){ removePhoto(); }
   addLine(STEPS[step]);
+  if(step === 1){ addPhoto(); }
 
   if(step === STEPS.length - 1){
     tapNote.style.display = "none";
@@ -574,7 +615,7 @@ yesBtn.addEventListener("click", ()=>{
   msgList.style.display = "none";
   final.style.display = "block";
   finalText.innerHTML = FINAL_MESSAGE;
-  paper.style.maxHeight = "";     
+  paper.style.maxHeight = "";
   paper.classList.add("full");
   heartConfetti(50);
   enviarRespuesta("sí");
@@ -623,4 +664,3 @@ noBtn.addEventListener("click", (e)=>{
 
 </body>
 </html>
-
