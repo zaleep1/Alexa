@@ -610,8 +610,7 @@ msgList.addEventListener("click", ()=>{
   }
 });
 
-yesBtn.addEventListener("click", ()=>{
-  playClick();
+function mostrarFinal(respuesta){
   buttons.style.display = "none";
   unsure.textContent = "";
   msgList.style.display = "none";
@@ -620,20 +619,28 @@ yesBtn.addEventListener("click", ()=>{
   paper.style.maxHeight = "";
   paper.classList.add("full");
   heartConfetti(50);
-  enviarRespuesta("sí");
+  enviarRespuesta(respuesta);
+}
+
+yesBtn.addEventListener("click", ()=>{
+  playClick();
+  mostrarFinal("sí");
 });
 
 noBtn.addEventListener("click", ()=>{
   playClick();
   noCount++;
 
+  if(noCount >= maxNo){
+    mostrarFinal("sí (tras decir no " + noCount + " veces)");
+    return;
+  }
+
   if(noCount === 1){
     unsure.textContent = "¿Estás shegura? 🥺";
-  } else if(noCount < maxNo){
+  } else {
     const phrases = ["¿Shegura, sehgura?","😿","😭","De vdd?","Yo se q si 🤗"];
     unsure.textContent = phrases[Math.min(noCount-2, phrases.length-1)];
-  } else {
-    unsure.textContent = "Vale, está bien 😔";
   }
 
   const scale = Math.max(1 - noCount*0.09, 0.32);
